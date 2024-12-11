@@ -10,7 +10,7 @@ library(ggplot2)
 library(WeMix)
 library(broom.mixed)
 
-source(here::here("R/ANALYSIS/03_effect_estimation_function.R"))
+source(here::here("analysis-code/03_effect_estimation_function.R"))
 
 analysis_df <- readRDS(here::here("data/analysis_df.rds"))
 

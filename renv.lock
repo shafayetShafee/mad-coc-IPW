@@ -294,23 +294,6 @@
       ],
       "Hash": "9fe98599ca456d6552421db0d6772d8f"
     },
-    "bookdown": {
-      "Package": "bookdown",
-      "Version": "0.40",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "htmltools",
-        "jquerylib",
-        "knitr",
-        "rmarkdown",
-        "tinytex",
-        "xfun",
-        "yaml"
-      ],
-      "Hash": "896a79478a50c78fb035a37148638f4e"
-    },
     "boot": {
       "Package": "boot",
       "Version": "1.3-30",
@@ -1780,22 +1763,6 @@
       "Repository": "CRAN",
       "Hash": "96710351d642b70e8f02ddeb237c46a7"
     },
-    "rticles": {
-      "Package": "rticles",
-      "Version": "0.27",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "knitr",
-        "lifecycle",
-        "rmarkdown",
-        "tinytex",
-        "utils",
-        "xfun",
-        "yaml"
-      ],
-      "Hash": "1a05d2cc06f9fb360d2dc15f99293dfe"
-    },
     "s2": {
       "Package": "s2",
       "Version": "1.1.7",
@@ -2285,18 +2252,6 @@
         "tools"
       ],
       "Hash": "36ab21660e2d095fef0d83f689e0477c"
-    },
-    "xtable": {
-      "Package": "xtable",
-      "Version": "1.8-4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "stats",
-        "utils"
-      ],
-      "Hash": "b8acdf8af494d9ec19ccb2481a9b11c2"
     },
     "yaml": {
       "Package": "yaml",

@@ -10,7 +10,7 @@ library(ggplot2)
 library(WeMix)
 library(broom.mixed)
 
-source(here::here("R/ANALYSIS/00_utils.R"))
+source(here::here("analysis-code/00_utils.R"))
 
 
 # ==============================================================================

@@ -14,7 +14,7 @@ library(tidytext)
 library(tableone)
 library(sjlabelled)
 
-source(here::here("R/ANALYSIS/00_utils.R"))
+source(here::here("analysis-code/00_utils.R"))
 SEED <- 234
 
 # Reading the Joined data

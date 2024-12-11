@@ -13,7 +13,7 @@ library(patchwork)
 
 grps_result_df <- readRDS(here::here("data/groups_result.rds"))
 
-fig_path <- here::here("analysis-figures")
+fig_path <- here::here("analysis-figures/")
 
 plot_design <- "
 AA
