@@ -21,7 +21,6 @@ BC
 DE
 "
 
-
 # ==============================================================================
 # Preparing the K-Means Clustering Variance Elbow plot -------------------------
 # ==============================================================================
@@ -188,12 +187,12 @@ ggsave(
 
 
 # ==============================================================================
-# Calculating the overall ATE (Risk Difference) --------------------------------
+# Calculating the overall ATE (Risk Ratio) -------------------------------------
 # ==============================================================================
 
 ate_estimate <- grps_result_df %>%
   summarise(
-    ATE = sum(risk_diff_raw * group_wts) / sum(group_wts)
+    ATE = sum(risk_ratio_raw * group_wts) / sum(group_wts)
   ) %>%
   pull(ATE)
 
@@ -250,7 +249,7 @@ boot_est_hist <-
   bootstrap_df %>%
   ggplot(aes(ate_est)) +
   geom_density(fill = "grey95", color = "black") +
-  geom_vline(xintercept = 0, color = "red", linetype = "dotted", linewidth = 1) +
+  geom_vline(xintercept = 1, color = "red", linetype = "dotted", linewidth = 1) +
   geom_vline(
     xintercept = as.numeric(est_ci_table["bca_lower"]),
     color = "blue", linetype = "longdash", linewidth = 0.8
@@ -320,3 +319,4 @@ unwt_hist_comb_plot <-
     )
 
 print(unwt_hist_comb_plot)
+

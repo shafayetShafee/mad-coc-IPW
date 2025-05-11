@@ -69,15 +69,15 @@ tictoc::toc()
 
 saveRDS(res, file = here::here("data/groups_result.rds"))
 
-
 # ==============================================================================
 # Calculating the overall ATE (Risk Difference) --------------------------------
 # ==============================================================================
 
 ate_estimate <- res %>%
   summarise(
-    ATE = sum(risk_diff_raw * group_wts) / sum(group_wts)
+    ATE = sum(risk_ratio_raw * group_wts) / sum(group_wts)
   ) %>%
   pull(ATE)
 
 print(ate_estimate)
+

@@ -102,7 +102,7 @@ boot_results <- map_dfr(1:BOOT_ITER, ~ {
 
     ate_estimate <- resamp_res %>%
       summarise(
-        ATE = sum(risk_diff_raw * group_wts) / sum(group_wts)
+        ATE = sum(risk_ratio_raw * group_wts) / sum(group_wts)
       ) %>%
       pull(ATE)
 
@@ -127,4 +127,4 @@ boot_ate_estimates <- boot_results %>%
   slice(1:1000) %>%
   pull(ate_est)
 
-saveRDS(boot_results, here::here("data/boot_ate_estimates.rds"))
+saveRDS(boot_results, here::here("data/boot_ate_estimates_new_1000.rds"))

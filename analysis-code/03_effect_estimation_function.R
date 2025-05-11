@@ -68,6 +68,7 @@ calculate_grp_results <- function(
     pull(p0)
 
   risk_diff_raw <- p1_raw - p0_raw
+  risk_ratio_raw <- p1_raw / p0_raw
   or_raw <- (p1_raw / (1 - p1_raw)) / (p0_raw / (1 - p0_raw))
   group_wts <- sum(grp_ps_df$chwts)
 
@@ -138,6 +139,7 @@ calculate_grp_results <- function(
         p1_raw = p1_raw,
         p0_raw = p0_raw,
         risk_diff_raw = risk_diff_raw,
+        risk_ratio_raw = risk_ratio_raw,
         or_raw = or_raw,
         group_wts = group_wts,
         grp_ps_df = list(grp_ps_df),
@@ -152,6 +154,7 @@ calculate_grp_results <- function(
       p1_raw = p1_raw,
       p0_raw = p0_raw,
       risk_diff_raw = risk_diff_raw,
+      risk_ratio_raw = risk_ratio_raw,
       group_wts = group_wts,
       group_no = group_no
     )
