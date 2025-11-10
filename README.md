@@ -1,9 +1,9 @@
 # Reproducibility Materials
 
 [![R version](https://img.shields.io/badge/R-4.4.1-blue.svg)](https://cran.r-project.org/)
-[![Reproducible Environment: renv](https://img.shields.io/badge/reproducible%20environment-renv-lightgrey.svg)](https://rstudio.github.io/renv/)
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Formatted with air v0.7.1](https://img.shields.io/badge/formatted%20with-air%200.7.1-orange)](https://github.com/posit-dev/air)
+[![Reproducible Environment: renv](https://img.shields.io/badge/reproducible%20environment-renv-lightgreen.svg)](https://rstudio.github.io/renv/)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-orange.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![Formatted with air v0.7.1](https://img.shields.io/badge/formatted%20with-air%200.7.1-purple)](https://github.com/posit-dev/air)
 
 
 This repository contains the data and analysis code associated with the manuscript:
