@@ -1469,6 +1469,18 @@
       ],
       "Hash": "df58958f293b166e4ab885ebcad90e02"
     },
+    "pak": {
+      "Package": "pak",
+      "Version": "0.9.0",
+      "Source": "Repository",
+      "Repository": "https://r-lib.github.io/p/pak/stable/mac.binary.big-sur-arm64/darwin20/aarch64",
+      "Requirements": [
+        "R",
+        "tools",
+        "utils"
+      ],
+      "Hash": "e4d8ebf0ea80af486caf4209c924ddf9"
+    },
     "parallelly": {
       "Package": "parallelly",
       "Version": "1.38.0",
