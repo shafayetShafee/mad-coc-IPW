@@ -1,0 +1,15 @@
+name: reproducible-analysis
+
+services:
+  rstudio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mad-coc-ipw
+    ports:
+      - "8787:8787"
+    environment:
+      DISABLE_AUTH: "true"
+    volumes:
+      - ./:/home/rstudio/mad-coc-IPW
+    restart: unless-stopped
