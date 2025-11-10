@@ -2,10 +2,9 @@
 
 The raw data used in this analysis are available in the following figshare repository:
 
-**Shafee, Shafayet Khan (2025). *Investigating the causal effect of maternal continuum 
+> Shafee, Shafayet Khan (2025). Investigating the causal effect of maternal continuum 
 of care on child's minimum acceptable diet: A multilevel approach using partially pooled 
-propensity score weighting.* figshare. Dataset.**  
-https://doi.org/10.6084/m9.figshare.30073489
+propensity score weighting. figshare. Dataset. https://doi.org/10.6084/m9.figshare.30073489
 
 Please download the data from the above link and place the files in this directory before 
 running the analysis.
