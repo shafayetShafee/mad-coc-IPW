@@ -45,6 +45,19 @@ ggsave(
   family="Times"
 )
 
+# for PLOS One
+ggsave(
+  filename = paste0(fig_path, "Fig1.tiff"),
+  plot = elbow_plot_gg_obj,
+  device = "tiff",
+  width = 6,
+  height = 4,
+  dpi = 600,
+  units = "in",
+  compression = "lzw",
+  type = "cairo",
+  family="Times"
+)
 
 
 # ==============================================================================
@@ -70,6 +83,20 @@ ggsave(
   width = 8,
   height = 4,
   dpi = 800,
+  family="Times"
+)
+
+# for PLOS One
+ggsave(
+  filename = paste0(fig_path, "Fig2.tiff"),
+  plot = kclust_group_preval_gg_obj,
+  device = "tiff",
+  width = 7,
+  height = 4,
+  dpi = 600,
+  units = "in",
+  compression = "lzw",
+  type = "cairo",
   family="Times"
 )
 
@@ -131,6 +158,19 @@ ggsave(
   family="Times"
 )
 
+# for PLOS One
+ggsave(
+  filename = paste0(fig_path, "Fig4.tiff"),
+  plot = wt_ps_hist_plot,
+  device = "tiff",
+  width = 7,
+  height = 5,
+  dpi = 600,
+  units = "in",
+  compression = "lzw",
+  type = "cairo",
+  family="Times"
+)
 
 # ==============================================================================
 # Preparing the love (Covariance balance) plot ---------------------------------
@@ -182,6 +222,20 @@ ggsave(
   width = 7,
   height = 6,
   dpi = 800,
+  family="Times"
+)
+
+# for PLOS One
+ggsave(
+  filename = paste0(fig_path, "Fig3.tiff"),
+  plot = grp_love_plot,
+  device = "tiff",
+  width = 7,
+  height = 6,
+  dpi = 600,
+  units = "in",
+  compression = "lzw",
+  type = "cairo",
   family="Times"
 )
 
@@ -293,6 +347,21 @@ ggsave(
   dpi = 800,
   family="Times"
 )
+
+# for PLOS One
+ggsave(
+  filename = paste0(fig_path, "Fig5.tiff"),
+  plot = boot_est_hist,
+  device = "tiff",
+  width = 5,
+  height = 4,
+  dpi = 600,
+  units = "in",
+  compression = "lzw",
+  type = "cairo",
+  family="Times"
+)
+
 
 # ==============================================================================
 # SUPPLEMENTARY ----------------------------------------------------------------

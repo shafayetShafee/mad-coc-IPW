@@ -151,7 +151,7 @@ safe_and_quietly <- function(fun, ...) {
 # }
 
 # copied from: https://felixfan.github.io/formatting-plots-for-pubs/
-theme_bw_publish <- function(base_size = 12, base_family = "Helvetica") {
+theme_bw_publish <- function(base_size = 12, base_family = "Times") {
   (
     theme_bw(base_size = base_size, base_family = base_family) +
       theme(
@@ -165,7 +165,7 @@ theme_bw_publish <- function(base_size = 12, base_family = "Helvetica") {
 
 # copied from:
 # https://github.com/koundy/ggplot_theme_Publication/blob/master/ggplot_theme_Publication-2.R
-theme_publication <- function(base_size = 14, base_family = "sans") {
+theme_publication <- function(base_size = 12, base_family = "Times") {
   (
     ggthemes::theme_foundation(base_size = base_size, base_family = base_family) +
       theme(
