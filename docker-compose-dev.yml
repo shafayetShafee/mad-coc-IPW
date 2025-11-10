@@ -1,7 +1,10 @@
+name: reproducible-analysis
 
 services:
   rstudio:
-    image: ghcr.io/shafayetshafee/mad-coc-ipw:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: mad-coc-ipw
     ports:
       - "8787:8787"
