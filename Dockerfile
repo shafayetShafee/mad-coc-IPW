@@ -1,8 +1,5 @@
 FROM rocker/rstudio:4.4.1
 
-WORKDIR /home/rstudio/mad-coc-IPW
-
-# Install system dependencies
 RUN apt-get update -qq && apt-get install -y --no-install-recommends \
     libfontconfig1-dev \
     libfreetype6-dev \
@@ -26,14 +23,24 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-COPY renv.lock renv.lock
-COPY renv/activate.R renv/activate.R
-COPY .Rprofile /home/rstudio/.Rprofile
-RUN echo 'setwd("/home/rstudio/mad-coc-IPW"); source("renv/activate.R")' > /home/rstudio/.Rprofile
+USER rstudio
 
-RUN chown -R rstudio:rstudio /home/rstudio
+RUN R -e "install.packages('rstudioapi')"
+
+USER root
+
+WORKDIR /home/rstudio/mad-coc-IPW
+
+COPY . .
+
+RUN chown -R rstudio:rstudio /home/rstudio/mad-coc-IPW
 
 USER rstudio
+
 RUN R -e "renv::restore()"
 
 USER root
+
+COPY create_rprofile.sh /tmp/create_rprofile.sh
+RUN /bin/bash /tmp/create_rprofile.sh && rm /tmp/create_rprofile.sh
+
