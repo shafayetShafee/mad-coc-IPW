@@ -7,8 +7,15 @@ library(purrr)
 
 sensitivity_data <- readRDS(here::here("data/analysis_df.rds"))
 
-formula <- coc ~ helevel + welevel + wealth_index + db2 + cm11_cat_fct +
-  WB4 + ever_used_media + place_of_res
+formula <- coc ~
+  helevel +
+    welevel +
+    wealth_index +
+    db2 +
+    cm11_cat_fct +
+    WB4 +
+    ever_used_media +
+    place_of_res
 
 ps_model <- glm(
   formula = formula,
@@ -23,8 +30,9 @@ ps_model <- glm(
 sensitivity_data <- sensitivity_data %>%
   mutate(
     ps = predict(ps_model, type = "response"),
-    wt = ifelse(coc == 1, 1/ps, 1/(1-ps)),
-    wts = chweight * wt)
+    wt = ifelse(coc == 1, 1 / ps, 1 / (1 - ps)),
+    wts = chweight * wt
+  )
 
 q0 <- weighted.mean(
   sensitivity_data$mad[sensitivity_data$coc == 0],
@@ -40,8 +48,16 @@ q1 <- weighted.mean(
 # ==============================================================================
 # Fit Outcome Model ------------------------------------------------------------
 # ==============================================================================
-outcome_formula <- mad ~ coc + place_of_res + helevel + welevel + wealth_index + cm11_cat_fct + db2 +
-  WB4 + ever_used_media
+outcome_formula <- mad ~
+  coc +
+    place_of_res +
+    helevel +
+    welevel +
+    wealth_index +
+    cm11_cat_fct +
+    db2 +
+    WB4 +
+    ever_used_media
 
 fitY <- glm(
   formula = outcome_formula,
@@ -71,4 +87,3 @@ K1max <- min(pred + (1 - pred) / predY1)
 
 RRmin <- K1min / K0max * (q1 / q0)
 RRmax <- K1max / K0min * (q1 / q0)
-

@@ -13,8 +13,16 @@ analysis_df <- readRDS(here::here("data/analysis_df.rds"))
 # Calculating SE using Bootstrap -----------------------------------------------
 # ==============================================================================
 
-full_formula_ps <- coc ~ helevel + welevel + wealth_index + db2 + cm11_cat_fct +
-  WB4 + ever_used_media + place_of_res + (1 | HH7A_ch)
+full_formula_ps <- coc ~
+  helevel +
+    welevel +
+    wealth_index +
+    db2 +
+    cm11_cat_fct +
+    WB4 +
+    ever_used_media +
+    place_of_res +
+    (1 | HH7A_ch)
 
 unique_clusters <- unique(analysis_df$HH1)
 
@@ -23,99 +31,106 @@ BOOT_ITER <- 2000
 set.seed(SEED)
 
 
-boot_results <- map_dfr(1:BOOT_ITER, ~ {
-  # Sample clusters with replacement
-  sampled_clusters <- sample(
-    unique_clusters, length(unique_clusters),
-    replace = TRUE
-  )
-
-  # creating resampled data
-  resamp_df <- map_dfr(sampled_clusters, ~ {
-    analysis_df %>% filter(HH1 == .x)
-  })
-
-  coc_prop_df <- resamp_df %>%
-    group_by(HH7A_ch) %>%
-    summarize(
-      coc_prop = mean(coc)
+boot_results <- map_dfr(
+  1:BOOT_ITER,
+  ~ {
+    # Sample clusters with replacement
+    sampled_clusters <- sample(
+      unique_clusters,
+      length(unique_clusters),
+      replace = TRUE
     )
 
-  g4_kmeans <- kmeans(coc_prop_df$coc_prop, centers = 4)
-
-  g4_kmeans_df <- augment(g4_kmeans, coc_prop_df) %>%
-    rename("groups" = .cluster)
-
-  resamp_df <- resamp_df %>%
-    select(-groups) %>%
-    left_join(g4_kmeans_df, by = join_by(HH7A_ch))
-
-  resamp_df_grouped <- resamp_df %>%
-    group_by(groups) %>%
-    nest()
-
-  res <- map2_dfr(
-    .x = resamp_df_grouped$data,
-    .y = resamp_df_grouped$groups,
-    .f = ~ safe_and_quietly(
-      fun = calculate_grp_results,
-      grp_df = .x,
-      group_no = .y,
-      ps_model_formula = full_formula_ps,
-      out_var = "mad",
-      treat_var = "coc",
-      ranef_var = "HH7A_ch",
-      sampling_wts_var = "chweight",
-      bootstrap_run = TRUE
+    # creating resampled data
+    resamp_df <- map_dfr(
+      sampled_clusters,
+      ~ {
+        analysis_df %>% filter(HH1 == .x)
+      }
     )
-  )
 
-  # extraction ---------------------------------
-  res_result <- res$result
-  res_messages <- res$messages
-  res_warnings <- res$warnings
-  res_error <- res$error
+    coc_prop_df <- resamp_df %>%
+      group_by(HH7A_ch) %>%
+      summarize(
+        coc_prop = mean(coc)
+      )
 
-  # account for error -------------------------
-  msg_prob_detected <- any(!is.na(res_messages))
-  warning_detected <- any(!is.na(res_warnings))
-  error_detected <- any(!is.na(res_error))
+    g4_kmeans <- kmeans(coc_prop_df$coc_prop, centers = 4)
 
-  if (msg_prob_detected) {
-    message(paste0(res_messages, collapse = "\n"))
-  }
+    g4_kmeans_df <- augment(g4_kmeans, coc_prop_df) %>%
+      rename("groups" = .cluster)
 
-  if (warning_detected) {
-    message(paste0(res_warnings, collapse = "\n"))
-  }
+    resamp_df <- resamp_df %>%
+      select(-groups) %>%
+      left_join(g4_kmeans_df, by = join_by(HH7A_ch))
 
-  if (error_detected) {
-    message(paste0(res_error, collapse = "\n"))
-    return(
-      tibble(
-        resamp_res_data = list(resamp_df_grouped),
-        ate_est = NA
+    resamp_df_grouped <- resamp_df %>%
+      group_by(groups) %>%
+      nest()
+
+    res <- map2_dfr(
+      .x = resamp_df_grouped$data,
+      .y = resamp_df_grouped$groups,
+      .f = ~ safe_and_quietly(
+        fun = calculate_grp_results,
+        grp_df = .x,
+        group_no = .y,
+        ps_model_formula = full_formula_ps,
+        out_var = "mad",
+        treat_var = "coc",
+        ranef_var = "HH7A_ch",
+        sampling_wts_var = "chweight",
+        bootstrap_run = TRUE
       )
     )
-  } else {
-    resamp_res <- bind_rows(res_result)
 
-    ate_estimate <- resamp_res %>%
-      summarise(
-        ATE = sum(risk_ratio_raw * group_wts) / sum(group_wts)
-      ) %>%
-      pull(ATE)
+    # extraction ---------------------------------
+    res_result <- res$result
+    res_messages <- res$messages
+    res_warnings <- res$warnings
+    res_error <- res$error
 
-    message(paste0("Completed Bootstrap Iteration: ", .x))
+    # account for error -------------------------
+    msg_prob_detected <- any(!is.na(res_messages))
+    warning_detected <- any(!is.na(res_warnings))
+    error_detected <- any(!is.na(res_error))
 
-    return(
-      tibble(
-        resamp_res_data = list(resamp_res),
-        ate_est = ate_estimate
+    if (msg_prob_detected) {
+      message(paste0(res_messages, collapse = "\n"))
+    }
+
+    if (warning_detected) {
+      message(paste0(res_warnings, collapse = "\n"))
+    }
+
+    if (error_detected) {
+      message(paste0(res_error, collapse = "\n"))
+      return(
+        tibble(
+          resamp_res_data = list(resamp_df_grouped),
+          ate_est = NA
+        )
       )
-    )
+    } else {
+      resamp_res <- bind_rows(res_result)
+
+      ate_estimate <- resamp_res %>%
+        summarise(
+          ATE = sum(risk_ratio_raw * group_wts) / sum(group_wts)
+        ) %>%
+        pull(ATE)
+
+      message(paste0("Completed Bootstrap Iteration: ", .x))
+
+      return(
+        tibble(
+          resamp_res_data = list(resamp_res),
+          ate_est = ate_estimate
+        )
+      )
+    }
   }
-})
+)
 
 
 # ==============================================================================

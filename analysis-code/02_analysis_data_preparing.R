@@ -35,15 +35,41 @@ mad_coc_df <- joined_df %>%
     vit_a = eq_to_one(BD8D) | eq_to_one(BD8F) | eq_to_one(BD8G),
     grain = eq_to_one(BD8B) | eq_to_one(BD8C) | eq_to_one(BD8E),
     flesh = eq_to_one(BD8I) | eq_to_one(BD8J) | eq_to_one(BD8L),
-    dairy = eq_to_one(BD7D) | eq_to_one(BD7E) | eq_to_one(BD8A) | eq_to_one(BD8N),
-    mdd = (still_breastfed + grain + flesh + dairy + egg + vit_a +
-      legumes + other_fruit) >= 5,
+    dairy = eq_to_one(BD7D) |
+      eq_to_one(BD7E) |
+      eq_to_one(BD8A) |
+      eq_to_one(BD8N),
+    mdd = (still_breastfed +
+      grain +
+      flesh +
+      dairy +
+      egg +
+      vit_a +
+      legumes +
+      other_fruit) >=
+      5,
 
     # MMF calculation --------------
-    BD7E1 = if_else(BD7E1 == 8 | is.na(BD7E1), 0, as.numeric(as.character(BD7E1))),
-    BD7D1 = if_else(BD7D1 %in% c(8, 9) | is.na(BD7D1), 0, as.numeric(as.character(BD7D1))),
-    BD8A1 = if_else(BD8A1 == 8 | is.na(BD8A1), 0, as.numeric(as.character(BD8A1))),
-    BD9 = if_else(BD9 %in% c(8, 9) | is.na(BD9), 0, as.numeric(as.character(BD9))),
+    BD7E1 = if_else(
+      BD7E1 == 8 | is.na(BD7E1),
+      0,
+      as.numeric(as.character(BD7E1))
+    ),
+    BD7D1 = if_else(
+      BD7D1 %in% c(8, 9) | is.na(BD7D1),
+      0,
+      as.numeric(as.character(BD7D1))
+    ),
+    BD8A1 = if_else(
+      BD8A1 == 8 | is.na(BD8A1),
+      0,
+      as.numeric(as.character(BD8A1))
+    ),
+    BD9 = if_else(
+      BD9 %in% c(8, 9) | is.na(BD9),
+      0,
+      as.numeric(as.character(BD9))
+    ),
     milkfeeds = BD7E1 + BD7D1 + BD8A1,
     mmf = case_when(
       still_breastfed == 1 & CAGE >= 6 & CAGE <= 8 ~ BD9 >= 2,
@@ -75,7 +101,8 @@ mad_coc_df <- joined_df %>%
     PN23D_1 = if_else(PN23D == "D", 1, 0),
     PN23E_1 = if_else(PN23E == "E", 1, 0),
     pnc_provider = case_when(
-      PN23A_1 == 1 | PN23B_1 == 1 | PN23C_1 == 1 | PN23D_1 == 1 | PN23E_1 == 1 ~ 1,
+      PN23A_1 == 1 | PN23B_1 == 1 | PN23C_1 == 1 | PN23D_1 == 1 | PN23E_1 == 1 ~
+        1,
       TRUE ~ 0
     ),
     pnc_mtp = pnc_mother & pnc_provider,
@@ -98,7 +125,8 @@ mad_coc_df <- joined_df %>%
     MN19D_1 = if_else(MN19D == "D", 1, 0),
     MN19E_1 = if_else(MN19E == "E", 1, 0),
     sba = case_when(
-      MN19A_1 == 1 | MN19B_1 == 1 | MN19C_1 == 1 | MN19D_1 == 1 | MN19E_1 == 1 ~ 1,
+      MN19A_1 == 1 | MN19B_1 == 1 | MN19C_1 == 1 | MN19D_1 == 1 | MN19E_1 == 1 ~
+        1,
       TRUE ~ 0
     ),
 
@@ -138,7 +166,8 @@ mad_coc_df %>%
   ggplot(aes(forcats::fct_reorder(HH7A_ch, coc_prop), coc_prop)) +
   geom_col(color = "grey20", fill = "white") +
   labs(
-    x = "District", y = "Propotion of CoC"
+    x = "District",
+    y = "Propotion of CoC"
   ) +
   theme_publication(base_family = "Times") +
   theme(
@@ -161,11 +190,18 @@ mad_coc_df_cleaned <- mad_coc_df %>%
     mt3 = fct_recode(MT3, `0` = "9"),
     welevel = fct_recode(
       welevel,
-      `0` = "0", `0` = "1", `1` = "2", `1` = "3"
+      `0` = "0",
+      `0` = "1",
+      `1` = "2",
+      `1` = "3"
     ),
     helevel = fct_recode(
       helevel,
-      `0` = "0", `0` = "1", `1` = "2", `1` = "3", `0` = "9"
+      `0` = "0",
+      `0` = "1",
+      `1` = "2",
+      `1` = "3",
+      `0` = "9"
     ),
     place_of_res = factor(
       HH6_wm,
@@ -179,8 +215,11 @@ mad_coc_df_cleaned <- mad_coc_df %>%
     ),
     wealth_index = fct_recode(
       wealth_index,
-      "poor" = "Poorest", "poor" = "Second", "middle" = "Middle",
-      "rich" = "Fourth", "rich" = "Richest"
+      "poor" = "Poorest",
+      "poor" = "Second",
+      "middle" = "Middle",
+      "rich" = "Fourth",
+      "rich" = "Richest"
     ),
     cm11_cat = case_when(
       CM11 == 1 ~ "1",
@@ -203,10 +242,33 @@ mad_coc_df_cleaned <- mad_coc_df %>%
     ever_used_media = (mt1_num + mt2_num + mt3_num) > 0
   ) %>%
   select(
-    HH1, HH2, HH6_wm, HH7A_ch, stratum_ch, chweight, wmweight_wm,
-    helevel, welevel, windex5_wm, wealth_index, cm11_cat_fct, db2,
-    place_of_res, wm_age_cat_fct, WB4, ever_used_media, mdd, mmf, mad,
-    coc, coc_level, pnc_mother, sba, anc4, anc_mt, anc4_mt
+    HH1,
+    HH2,
+    HH6_wm,
+    HH7A_ch,
+    stratum_ch,
+    chweight,
+    wmweight_wm,
+    helevel,
+    welevel,
+    windex5_wm,
+    wealth_index,
+    cm11_cat_fct,
+    db2,
+    place_of_res,
+    wm_age_cat_fct,
+    WB4,
+    ever_used_media,
+    mdd,
+    mmf,
+    mad,
+    coc,
+    coc_level,
+    pnc_mother,
+    sba,
+    anc4,
+    anc_mt,
+    anc4_mt
   )
 
 # Checking for NULL values
@@ -219,8 +281,15 @@ mad_coc_df_cleaned %>% vis_miss()
 
 CreateTableOne(
   vars = c(
-    "helevel", "welevel", "wealth_index", "cm11_cat_fct",
-    "wm_age_cat_fct", "WB4", "ever_used_media", "db2", "place_of_res",
+    "helevel",
+    "welevel",
+    "wealth_index",
+    "cm11_cat_fct",
+    "wm_age_cat_fct",
+    "WB4",
+    "ever_used_media",
+    "db2",
+    "place_of_res",
     "mad"
   ),
   factorVars = c("mad"),
@@ -249,7 +318,8 @@ kgroups <- tibble(
 ) %>%
   mutate(
     kclust = map2(
-      .x = k, .y = seed,
+      .x = k,
+      .y = seed,
       .f = \(x, y) {
         set.seed(y)
         kmeans(coc_prop$coc_prop, x)
@@ -267,7 +337,11 @@ kgroups <- tibble(
 
 elbow_plot <- kgroups %>%
   unnest(cols = c(glanced)) %>%
-  select(k, "Within Variance" = tot.withinss, "Between Variance" = betweenss) %>%
+  select(
+    k,
+    "Within Variance" = tot.withinss,
+    "Between Variance" = betweenss
+  ) %>%
   pivot_longer(cols = !k, names_to = "variance_type", values_to = "value") %>%
   ggplot(aes(x = factor(k), group = variance_type)) +
   geom_line(aes(y = value), linewidth = 0.4) +
@@ -360,7 +434,8 @@ g4_preval_plot <- tidy(g4_kmeans) %>%
   geom_col(color = "grey10", fill = "white") +
   geom_text(aes(label = size), nudge_y = 0.04) +
   labs(
-    x = "Groups", y = "Mean prevalence` of CoC"
+    x = "Groups",
+    y = "Mean prevalence` of CoC"
   ) +
   theme_publication(base_family = "Times") +
   theme(
@@ -378,9 +453,22 @@ g4_preval_plot
 analysis_df <- mad_coc_df_cleaned %>%
   left_join(g4_kmeans_df, by = join_by(HH7A_ch)) %>%
   select(
-    HH1, HH7A_ch, stratum_ch, chweight, place_of_res,
-    helevel, welevel, wealth_index, cm11_cat_fct, db2,
-    wm_age_cat_fct, WB4, ever_used_media, mad, coc, groups
+    HH1,
+    HH7A_ch,
+    stratum_ch,
+    chweight,
+    place_of_res,
+    helevel,
+    welevel,
+    wealth_index,
+    cm11_cat_fct,
+    db2,
+    wm_age_cat_fct,
+    WB4,
+    ever_used_media,
+    mad,
+    coc,
+    groups
   ) %>%
   mutate(
     coc = as.numeric(coc)

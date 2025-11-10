@@ -18,18 +18,19 @@ source(here::here("analysis-code/00_utils.R"))
 # ==============================================================================
 
 calculate_grp_results <- function(
-    grp_df,
-    group_no,
-    ps_model_formula,
-    out_var = "mad",
-    treat_var = "coc",
-    ranef_var = "HH7A_ch",
-    sampling_wts_var = "chweight",
-    ps_hist_treat_label = "Received CoC",
-    ps_hist_control_label = "Did not receive CoC",
-    ps_hist_bins = 15,
-    bal_tab_var_names = NULL,
-    bootstrap_run = FALSE) {
+  grp_df,
+  group_no,
+  ps_model_formula,
+  out_var = "mad",
+  treat_var = "coc",
+  ranef_var = "HH7A_ch",
+  sampling_wts_var = "chweight",
+  ps_hist_treat_label = "Received CoC",
+  ps_hist_control_label = "Did not receive CoC",
+  ps_hist_bins = 15,
+  bal_tab_var_names = NULL,
+  bootstrap_run = FALSE
+) {
   ps_model_vars <- base::all.vars(ps_model_formula)
   confounders <- setdiff(ps_model_vars, c(treat_var, ranef_var))
 
@@ -45,7 +46,9 @@ calculate_grp_results <- function(
   grp_ps_df <- grp_df %>%
     mutate(
       ps = predict(ps_model_wemix, type = "response"),
-      wts = !!parse_expr(treat_var) / ps + ((1 - !!parse_expr(treat_var)) / (1 - ps)),
+      wts = !!parse_expr(treat_var) /
+        ps +
+        ((1 - !!parse_expr(treat_var)) / (1 - ps)),
       chwts = !!parse_expr(sampling_wts_var) * wts
     )
 

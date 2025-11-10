@@ -42,7 +42,7 @@ ggsave(
   width = 6,
   height = 4,
   dpi = 800,
-  family="Times"
+  family = "Times"
 )
 
 # for PLOS One
@@ -56,7 +56,7 @@ ggsave(
   units = "in",
   compression = "lzw",
   type = "cairo",
-  family="Times"
+  family = "Times"
 )
 
 
@@ -83,7 +83,7 @@ ggsave(
   width = 8,
   height = 4,
   dpi = 800,
-  family="Times"
+  family = "Times"
 )
 
 # for PLOS One
@@ -97,7 +97,7 @@ ggsave(
   units = "in",
   compression = "lzw",
   type = "cairo",
-  family="Times"
+  family = "Times"
 )
 
 
@@ -155,7 +155,7 @@ ggsave(
   width = 7,
   height = 5,
   dpi = 800,
-  family="Times"
+  family = "Times"
 )
 
 # for PLOS One
@@ -169,7 +169,7 @@ ggsave(
   units = "in",
   compression = "lzw",
   type = "cairo",
-  family="Times"
+  family = "Times"
 )
 
 # ==============================================================================
@@ -222,7 +222,7 @@ ggsave(
   width = 7,
   height = 6,
   dpi = 800,
-  family="Times"
+  family = "Times"
 )
 
 # for PLOS One
@@ -236,7 +236,7 @@ ggsave(
   units = "in",
   compression = "lzw",
   type = "cairo",
-  family="Times"
+  family = "Times"
 )
 
 
@@ -303,14 +303,23 @@ boot_est_hist <-
   bootstrap_df %>%
   ggplot(aes(ate_est)) +
   geom_density(fill = "grey95", color = "black") +
-  geom_vline(xintercept = 1, color = "red", linetype = "dotted", linewidth = 1) +
+  geom_vline(
+    xintercept = 1,
+    color = "red",
+    linetype = "dotted",
+    linewidth = 1
+  ) +
   geom_vline(
     xintercept = as.numeric(est_ci_table["bca_lower"]),
-    color = "blue", linetype = "longdash", linewidth = 0.8
+    color = "blue",
+    linetype = "longdash",
+    linewidth = 0.8
   ) +
   geom_vline(
     xintercept = as.numeric(est_ci_table["bca_upper"]),
-    color = "blue", linetype = "longdash", linewidth = 0.8
+    color = "blue",
+    linetype = "longdash",
+    linewidth = 0.8
   ) +
   labs(
     x = "ATE",
@@ -325,7 +334,7 @@ boot_est_hist <-
     axis.title.x = element_text(
       margin = margin(t = 10),
       size = 12
-      )
+    )
   )
 
 print(boot_est_hist)
@@ -345,7 +354,7 @@ ggsave(
   width = 5,
   height = 4,
   dpi = 800,
-  family="Times"
+  family = "Times"
 )
 
 # for PLOS One
@@ -359,7 +368,7 @@ ggsave(
   units = "in",
   compression = "lzw",
   type = "cairo",
-  family="Times"
+  family = "Times"
 )
 
 
@@ -373,19 +382,18 @@ grps_result_df %>%
 
 unwt_hist_comb_plot <-
   guide_area() +
-    unwt_ps_hist_list[[1]] +
-    unwt_ps_hist_list[[2]] +
-    unwt_ps_hist_list[[3]] +
-    unwt_ps_hist_list[[4]] +
-    plot_layout(
-      guides = "collect",
-      axis_titles = "collect",
-      design = plot_design,
-      heights = c(1, 4.5, 4.5)
-    ) &
-    theme(
-      legend.position = "top"
-    )
+  unwt_ps_hist_list[[1]] +
+  unwt_ps_hist_list[[2]] +
+  unwt_ps_hist_list[[3]] +
+  unwt_ps_hist_list[[4]] +
+  plot_layout(
+    guides = "collect",
+    axis_titles = "collect",
+    design = plot_design,
+    heights = c(1, 4.5, 4.5)
+  ) &
+  theme(
+    legend.position = "top"
+  )
 
 print(unwt_hist_comb_plot)
-

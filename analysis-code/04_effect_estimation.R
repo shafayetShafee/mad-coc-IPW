@@ -23,8 +23,16 @@ analysis_df_grouped <- analysis_df %>%
   group_by(groups) %>%
   nest()
 
-full_formula_ps <- coc ~ helevel + welevel + wealth_index + db2 + cm11_cat_fct +
-  WB4 + ever_used_media + place_of_res + (1 | HH7A_ch)
+full_formula_ps <- coc ~
+  helevel +
+    welevel +
+    wealth_index +
+    db2 +
+    cm11_cat_fct +
+    WB4 +
+    ever_used_media +
+    place_of_res +
+    (1 | HH7A_ch)
 
 love_plot_var_names <- c(
   helevel = "HHE: >= Secondary",
@@ -80,4 +88,3 @@ ate_estimate <- res %>%
   pull(ATE)
 
 print(ate_estimate)
-
