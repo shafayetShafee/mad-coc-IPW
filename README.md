@@ -112,11 +112,7 @@ is required, please use the Docker method below.
    
 2. Run the container either with `docker` command or `docker compose`
    ```bash
-   docker run -it -p 8787:8787 ghcr.io/shafayetshafee/mad-coc-ipw:1.0.0
-   ```
-   
-   ```
-   docker compose up -d
+   docker run -d -p 8787:8787 ghcr.io/shafayetshafee/mad-coc-ipw:1.0.0
    ```
 
 3. Open your web browser and go to: `http://localhost:8787`
