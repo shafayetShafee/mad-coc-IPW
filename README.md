@@ -5,6 +5,7 @@
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-orange.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Formatted with air v0.7.1](https://img.shields.io/badge/formatted%20with-air%200.7.1-purple)](https://github.com/posit-dev/air)
 [![Docker Image](https://img.shields.io/badge/docker-ghcr.io/shafayetshafee/mad--coc--ipw-blue?logo=docker)](https://ghcr.io/shafayetshafee/mad-coc-ipw)
+[![Workflow](https://github.com/shafayetShafee/mad-coc-IPW/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/shafayetShafee/mad-coc-IPW/actions/workflows/docker-publish.yml)
 [![DOI](https://img.shields.io/badge/DOI-10.6084%2Fm9.figshare.30588473-cyan)](https://doi.org/10.6084/m9.figshare.30588473)
 
 
@@ -107,18 +108,15 @@ is required, please use the Docker method below.
 
 **Steps:**
 
-1. Pull the pre-built image
-   ```bash
-   docker pull ghcr.io/shafayetshafee/mad-coc-ipw:1.0.0
-   ```
-   
-2. Run the container either with `docker` command.
+1. Run the container using the pre-built image from GitHub.  
+   (This image includes the correct R version, RStudio Server, and all R package
+   dependencies exactly as used in the analysis.)
    ```bash
    docker run -d -p 8787:8787 ghcr.io/shafayetshafee/mad-coc-ipw:1.0.0
    ```
 
-3. Open your web browser and go to: `http://localhost:8787`
+2. Open your web browser and go to: `http://localhost:8787`
 
-4. This will open an RStudio Server session with all project dependencies already 
-installed and the project pre-loaded. You can directly run the analysis scripts inside 
-the container.
+3. You will be connected to an RStudio Server session with the project
+   pre-loaded and all dependencies installed. You can directly run the analysis
+   scripts inside the RStudio Server.
