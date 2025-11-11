@@ -110,7 +110,7 @@ is required, please use the Docker method below.
    docker pull ghcr.io/shafayetshafee/mad-coc-ipw:1.0.0
    ```
    
-2. Run the container either with `docker` command or `docker compose`
+2. Run the container either with `docker` command.
    ```bash
    docker run -d -p 8787:8787 ghcr.io/shafayetshafee/mad-coc-ipw:1.0.0
    ```
