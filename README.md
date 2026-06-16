@@ -8,12 +8,12 @@
 [![Workflow](https://github.com/shafayetShafee/mad-coc-IPW/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/shafayetShafee/mad-coc-IPW/actions/workflows/docker-publish.yml)
 [![DOI](https://img.shields.io/badge/DOI-10.6084%2Fm9.figshare.30588473-cyan)](https://doi.org/10.6084/m9.figshare.30588473)
 
-
-This repository contains the data and analysis code associated with the manuscript:
-
+> [!NOTE]
+> This repository contains the data and analysis code associated with the manuscript:
+>
 > Shafee SK, Sium MNI, Sarker B, Islam R (2025) Investigating the causal effect of maternal 
-continuum of care on child’s minimum acceptable diet: A multilevel approach using partially 
-pooled propensity score weighting. PLOS One, 20(10): e0335972. https://doi.org/10.1371/journal.pone.0335972
+> continuum of care on child’s minimum acceptable diet: A multilevel approach using partially 
+> pooled propensity score weighting. PLOS One, 20(10): e0335972. https://doi.org/10.1371/journal.pone.0335972
 
 
 ## Directories & files descriptions
@@ -39,8 +39,9 @@ pooled propensity score weighting. PLOS One, 20(10): e0335972. https://doi.org/1
 └── mad-coc-IPW.Rproj       # RStudio project file
 ```
 
-**Note:** Raw MICS data required for steps 01–02 is not included. Instructions are
-provided in [`mics_raw_data/README.md`](mics_raw_data/README.md).
+> [!IMPORTANT]
+> Raw MICS data required for steps 01–02 is not included. Instructions are
+> provided in [`mics_raw_data/README.md`](mics_raw_data/README.md).
 
 
 ## Analysis-code files descriptions
@@ -66,7 +67,14 @@ There are two ways to reproduce the analysis:
 2. Using [Docker Image](https://www.docker.com/) [recommended]
 
 
-### Method 1 — Using renv (Local Setup)
+### Method 1 - Using renv (Local Setup)
+
+> [!WARNING]
+> This project was originally developed
+> using R version `4.4.1`. If your system uses a different R version, some packages
+> may fail to install or behave differently. Therefore, this method may not guarantee
+> fully reproducible results. If exact reproducibility is required, please use the
+> Docker method below.
 
 **Prerequisites:**
 
@@ -94,29 +102,32 @@ required packages. This may take a few minutes on first run.
 5. After installation completes, you can re-run the analysis scripts located in:
 `analysis-code/`
 
-**Note on Reproducibility with `renv`:**
-
-This project was originally developed using R version `4.4.1`. If your system uses 
-a different R version, some packages may fail to install or behave differently. Therefore, 
-this method may not guarantee fully reproducible results. If exact reproducibility 
-is required, please use the Docker method below.
 
 
-### Method 2 — Using Docker (Recommended)
+### Method 2 - Using Docker (Recommended)
 
-**Prerequisite:** Docker installed on your system.
+**Prerequisite:** [Docker](https://docs.docker.com/get-docker/) installed on your system.
 
 **Steps:**
 
-1. Run the container using the pre-built image from GitHub.  
-   (This image includes the correct R version, RStudio Server, and all R package
-   dependencies exactly as used in the analysis.)
-   ```bash
-   docker run -d -p 8787:8787 ghcr.io/shafayetshafee/mad-coc-ipw:1.0.0
+1. Pull and start the container:
+
+   ``` bash
+   docker run -d -p 8787:8787 -e DISABLE_AUTH=true --restart unless-stopped \
+     --name mad-coc-ipw ghcr.io/shafayetshafee/mad-coc-ipw:latest
    ```
+
+   > This image bundles the correct R version (`4.4.1`), RStudio Server, and all
+   > R package dependencies exactly as used in the analysis.
 
 2. Open your web browser and go to: `http://localhost:8787`
 
 3. You will be connected to an RStudio Server session with the project
    pre-loaded and all dependencies installed. You can directly run the analysis
    scripts inside the RStudio Server.
+
+4. When done, stop and remove the container:
+
+   ```bash
+   docker rm -f mad-coc-ipw
+   ```
